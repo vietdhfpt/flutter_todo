@@ -76,8 +76,8 @@ class AddCard extends StatelessWidget {
             );
             Get.back();
             _controller.addTask(task)
-                ? EasyLoadingManager.showSuccess(status: 'Save Task success')
-                : EasyLoadingManager.showError(status: 'Dupplicate task');
+                ? EasyLoadingManager.showSuccess(status: 'Save success')
+                : EasyLoadingManager.showError(status: 'Save unsuccess');
             _controller.clearCache();
           }
         },

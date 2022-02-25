@@ -8,6 +8,7 @@ import '../../../data/models/task.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
+
   const TaskCard({
     Key? key,
     required this.task,
@@ -21,7 +22,6 @@ class TaskCard extends StatelessWidget {
       width: squareWidth / 2,
       height: squareWidth / 2,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(kDefaultBorderRadius),
         boxShadow: [appShadow],
         color: Colors.white,
       ),

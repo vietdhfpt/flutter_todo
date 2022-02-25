@@ -11,7 +11,8 @@ class HomeController extends GetxController {
   final editController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final chipIndex = 0.obs;
-
+  final _isDeleting = false.obs;
+  bool get isDeleting => _isDeleting.value;
   final tasks = <Task>[].obs;
 
   @override
@@ -21,8 +22,18 @@ class HomeController extends GetxController {
     ever(tasks, (_) => taskRepository.writeTasks(tasks));
   }
 
+  @override
+  void onClose() {
+    editController.dispose();
+    super.onClose();
+  }
+
   void changeChipIndex(int value) {
     chipIndex(value);
+  }
+
+  void changeDeleting(bool value) {
+    _isDeleting(value);
   }
 
   void clearCache() {
@@ -37,5 +48,9 @@ class HomeController extends GetxController {
 
     tasks.add(task);
     return true;
+  }
+
+  bool deleteTask(Task task) {
+    return tasks.remove(task);
   }
 }
