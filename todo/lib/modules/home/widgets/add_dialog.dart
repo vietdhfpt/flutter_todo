@@ -144,10 +144,7 @@ class AddDialog extends StatelessWidget {
       ),
       child: Text(
         'Add to',
-        style: TextStyle(
-          fontSize: 14.0.sp,
-          color: Colors.grey,
-        ),
+        style: buttonStyle.copyWith(color: Colors.grey),
       ),
     );
   }

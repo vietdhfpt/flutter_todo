@@ -47,7 +47,6 @@ class AddCard extends StatelessWidget {
           color: Colors.grey[400]!,
           dashPattern: const [8, 4],
           borderType: BorderType.Rect,
-          // radius: const Radius.circular(kDefaultBorderRadius),
           child: const Center(
             child: Icon(
               Icons.add,
