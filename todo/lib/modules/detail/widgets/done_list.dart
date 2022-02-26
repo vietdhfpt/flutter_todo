@@ -31,35 +31,55 @@ class DoneList extends StatelessWidget {
               ),
             ),
             ..._controller.doneTodos.map((element) {
-              final titleElement = element['title'];
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding * 2.8,
-                  vertical: kDefaultPadding,
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Icon(Icons.done, color: blue),
-                    ),
-                    const SizedBox(width: kDefaultSpacing),
-                    Text(
-                      titleElement,
-                      style: normalStyle.copyWith(
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              );
+              return _buildItem(element);
             }).toList(),
           ],
         );
       }
     });
+  }
+
+  Widget _buildItem(dynamic element) {
+    final titleElement = element['title'];
+
+    return Dismissible(
+      key: ObjectKey(element),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        _controller.deleteDoneTodo(element);
+      },
+      background: Container(
+        padding: const EdgeInsets.only(right: kDefaultPadding),
+        color: Colors.red.withOpacity(0.8),
+        alignment: Alignment.centerRight,
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding * 2.8,
+          vertical: kDefaultPadding,
+        ),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 20,
+              height: 20,
+              child: Icon(Icons.done, color: blue),
+            ),
+            const SizedBox(width: kDefaultSpacing),
+            Text(
+              titleElement,
+              style: normalStyle.copyWith(
+                decoration: TextDecoration.lineThrough,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
