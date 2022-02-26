@@ -11,6 +11,7 @@ class HomeController extends GetxController {
 
   final editController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final tabIndex = 0.obs;
   final chipIndex = 0.obs;
   final _isDeleting = false.obs;
   bool get isDeleting => _isDeleting.value;
@@ -32,6 +33,10 @@ class HomeController extends GetxController {
   void onClose() {
     editController.dispose();
     super.onClose();
+  }
+
+  void changeTabIndex(int value) {
+    tabIndex(value);
   }
 
   void changeChipIndex(int value) {
@@ -151,6 +156,31 @@ class HomeController extends GetxController {
         res += 1;
       }
     }
+    return res;
+  }
+
+  int getTotalTask() {
+    var res = 0;
+    for (int i = 0; i < tasks.length; i++) {
+      if (tasks[i].todos != null) {
+        res += tasks[i].todos!.length;
+      }
+    }
+    return res;
+  }
+
+  int getTotalDoneTask() {
+    var res = 0;
+    for (int i = 0; i < tasks.length; i++) {
+      if (tasks[i].todos != null) {
+        for (int j = 0; j < tasks[i].todos!.length; j++) {
+          if (tasks[i].todos![j]['done']) {
+            res += 1;
+          }
+        }
+      }
+    }
+
     return res;
   }
 }

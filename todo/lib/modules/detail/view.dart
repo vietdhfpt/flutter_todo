@@ -131,53 +131,51 @@ class DetailPage extends StatelessWidget {
   }
 
   Widget _buildInput() {
-    return Obx(() {
-      return Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding * 2,
-          vertical: kDefaultPadding,
-        ),
-        child: TextFormField(
-          controller: _homeController.editController,
-          autofocus: true,
-          decoration: InputDecoration(
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
-            prefixIcon: Icon(
-              Icons.check_box_outline_blank,
-              color: Colors.grey[400],
-            ),
-            suffixIcon: IconButton(
-              onPressed: () {
-                if (_homeController.formKey.currentState!.validate()) {
-                  var success = _homeController.addTodo(
-                    _homeController.editController.text,
-                  );
-                  if (success) {
-                    EasyLoadingManager.showSuccess(
-                      status: 'Todo item add success',
-                    );
-                  } else {
-                    EasyLoadingManager.showError(
-                      status: 'Todo item already exist',
-                    );
-                  }
-                  _homeController.editController.clear();
-                }
-              },
-              icon: const Icon(Icons.done),
-              color: blue,
-            ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: kDefaultPadding * 2,
+        vertical: kDefaultPadding,
+      ),
+      child: TextFormField(
+        controller: _homeController.editController,
+        autofocus: true,
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey[400]!),
           ),
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return 'Please enter your todo item';
-            }
-            return null;
-          },
+          prefixIcon: Icon(
+            Icons.check_box_outline_blank,
+            color: Colors.grey[400],
+          ),
+          suffixIcon: IconButton(
+            onPressed: () {
+              if (_homeController.formKey.currentState!.validate()) {
+                var success = _homeController.addTodo(
+                  _homeController.editController.text,
+                );
+                if (success) {
+                  EasyLoadingManager.showSuccess(
+                    status: 'Todo item add success',
+                  );
+                } else {
+                  EasyLoadingManager.showError(
+                    status: 'Todo item already exist',
+                  );
+                }
+                _homeController.editController.clear();
+              }
+            },
+            icon: const Icon(Icons.done),
+            color: blue,
+          ),
         ),
-      );
-    });
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please enter your todo item';
+          }
+          return null;
+        },
+      ),
+    );
   }
 }

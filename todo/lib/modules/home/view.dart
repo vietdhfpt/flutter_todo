@@ -5,6 +5,7 @@ import '../../core/utils/text_styles.dart';
 import '../../core/values/constants.dart';
 import '../../data/models/task.dart';
 import '../../widgets/easy_loading_manager.dart';
+import '../report/view.dart';
 import 'controller.dart';
 import 'widgets/add_card.dart';
 import 'widgets/add_dialog.dart';
@@ -34,23 +35,57 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        return Stack(
+        return IndexedStack(
+          index: controller.tabIndex.value,
           children: [
-            SafeArea(
-              child: ListView(
-                children: [
-                  _buildTitle(),
-                  _buildList(),
-                ],
-              ),
+            Stack(
+              children: [
+                SafeArea(
+                  child: ListView(
+                    children: [
+                      _buildTitle(),
+                      _buildList(),
+                    ],
+                  ),
+                ),
+                if (controller.isDeleting) _buildOpacity(),
+              ],
             ),
-            if (controller.isDeleting) _buildOpacity(),
+            ReportPage(),
           ],
         );
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildDeleteButton(),
+      bottomNavigationBar: _buildBottomNavBar(),
     );
+  }
+
+  Widget _buildBottomNavBar() {
+    return Obx(() {
+      return BottomNavigationBar(
+        onTap: (value) => controller.changeTabIndex(value),
+        currentIndex: controller.tabIndex.value,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(right: kDefaultPadding * 2),
+              child: Icon(Icons.apps),
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(left: kDefaultPadding * 2),
+              child: Icon(Icons.data_usage),
+            ),
+            label: 'Report',
+          ),
+        ],
+      );
+    });
   }
 
   Widget _buildTitle() {

@@ -15,6 +15,10 @@ TextStyle titleNormalStyle = TextStyle(
   fontSize: 20.0.sp,
 );
 
+TextStyle reportStyle = TextStyle(
+  fontSize: 13.0.sp,
+);
+
 TextStyle buttonStyle = TextStyle(
   fontSize: 13.0.sp,
 );
