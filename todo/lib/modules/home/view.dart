@@ -39,26 +39,8 @@ class HomePage extends GetView<HomeController> {
             SafeArea(
               child: ListView(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(kDefaultPadding),
-                    child: Text('My List', style: titleBigStyle),
-                  ),
-                  Obx(() {
-                    return GridView.count(
-                      padding: const EdgeInsets.all(kDefaultPadding),
-                      mainAxisSpacing: kDefaultPadding,
-                      crossAxisSpacing: kDefaultPadding,
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      children: [
-                        ...controller.tasks.map((task) {
-                          return _buildItem(task);
-                        }),
-                        AddCard(),
-                      ],
-                    );
-                  }),
+                  _buildTitle(),
+                  _buildList(),
                 ],
               ),
             ),
@@ -69,6 +51,32 @@ class HomePage extends GetView<HomeController> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildDeleteButton(),
     );
+  }
+
+  Widget _buildTitle() {
+    return Padding(
+      padding: const EdgeInsets.all(kDefaultPadding),
+      child: Text('My List', style: titleBigStyle),
+    );
+  }
+
+  Widget _buildList() {
+    return Obx(() {
+      return GridView.count(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        mainAxisSpacing: kDefaultPadding,
+        crossAxisSpacing: kDefaultPadding,
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        children: [
+          ...controller.tasks.map((task) {
+            return _buildItem(task);
+          }),
+          AddCard(),
+        ],
+      );
+    });
   }
 
   Widget _buildOpacity() {
