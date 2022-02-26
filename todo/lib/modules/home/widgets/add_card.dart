@@ -46,8 +46,8 @@ class AddCard extends StatelessWidget {
         child: DottedBorder(
           color: Colors.grey[400]!,
           dashPattern: const [8, 4],
-          borderType: BorderType.RRect,
-          radius: const Radius.circular(kDefaultBorderRadius),
+          borderType: BorderType.Rect,
+          // radius: const Radius.circular(kDefaultBorderRadius),
           child: const Center(
             child: Icon(
               Icons.add,
@@ -78,7 +78,10 @@ class AddCard extends StatelessWidget {
             _controller.addTask(task)
                 ? EasyLoadingManager.showSuccess(status: 'Save success')
                 : EasyLoadingManager.showError(status: 'Save unsuccess');
-            _controller.clearCache();
+
+            //* Clear cache
+            _controller.editController.clear();
+            _controller.changeChipIndex(0);
           }
         },
         style: ElevatedButton.styleFrom(

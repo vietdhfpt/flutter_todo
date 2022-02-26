@@ -15,6 +15,8 @@ class HomeController extends GetxController {
   bool get isDeleting => _isDeleting.value;
   final tasks = <Task>[].obs;
 
+  final task = Rx<Task?>(null);
+
   @override
   void onInit() {
     super.onInit();
@@ -36,9 +38,8 @@ class HomeController extends GetxController {
     _isDeleting(value);
   }
 
-  void clearCache() {
-    editController.clear();
-    changeChipIndex(0);
+  void changeTask(Task? newTask) {
+    task(newTask);
   }
 
   bool addTask(Task task) {
@@ -52,5 +53,27 @@ class HomeController extends GetxController {
 
   bool deleteTask(Task task) {
     return tasks.remove(task);
+  }
+
+  bool updateTask(
+    Task task,
+    String title,
+  ) {
+    var todos = task.todos ?? [];
+    if (containsTodo(todos, title)) {
+      return false;
+    }
+
+    var todo = {'title': title, 'done': false};
+    todos.add(todo);
+    var newTask = task.copyWith(todos: todos);
+    int oldTaskIndex = tasks.indexOf(task);
+    tasks[oldTaskIndex] = newTask;
+    tasks.refresh();
+    return true;
+  }
+
+  bool containsTodo(List todos, String title) {
+    return todos.any((element) => element['title'] == title);
   }
 }

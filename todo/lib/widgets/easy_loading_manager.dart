@@ -28,6 +28,13 @@ class EasyLoadingManager {
     EasyLoading.showError(status);
   }
 
+  static void showInfo({String status = ''}) {
+    EasyLoading.showInfo(
+      status,
+      duration: const Duration(milliseconds: 1000),
+    );
+  }
+
   static void close() {
     EasyLoading.dismiss(animation: false);
   }

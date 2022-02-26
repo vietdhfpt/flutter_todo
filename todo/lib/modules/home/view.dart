@@ -7,10 +7,28 @@ import '../../data/models/task.dart';
 import '../../widgets/easy_loading_manager.dart';
 import 'controller.dart';
 import 'widgets/add_card.dart';
+import 'widgets/add_dialog.dart';
 import 'widgets/task_card.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
+
+  void _processAddTask() {
+    if (controller.tasks.isNotEmpty) {
+      Get.to(
+        () => AddDialog(),
+        transition: Transition.downToUp,
+      );
+    } else {
+      EasyLoadingManager.showInfo(status: 'Please create your task type');
+    }
+  }
+
+  void _processDeleteTask(Task task) {
+    controller.deleteTask(task)
+        ? EasyLoadingManager.showSuccess(status: 'Delete success')
+        : EasyLoadingManager.showError(status: 'Delete unsuccess');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +62,20 @@ class HomePage extends GetView<HomeController> {
                 ],
               ),
             ),
-            if (controller.isDeleting)
-              Container(
-                width: Get.width,
-                height: Get.height,
-                color: Colors.black.withOpacity(0.4),
-              ),
+            if (controller.isDeleting) _buildOpacity(),
           ],
         );
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildDeleteButton(),
+    );
+  }
+
+  Widget _buildOpacity() {
+    return Container(
+      width: Get.width,
+      height: Get.height,
+      color: Colors.black.withOpacity(0.4),
     );
   }
 
@@ -82,22 +103,16 @@ class HomePage extends GetView<HomeController> {
     return DragTarget<Task>(
       builder: (context, _, __) {
         return Obx(() {
-          if (!controller.isDeleting) return const SizedBox.shrink();
-
           return FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.red,
-            child: const Icon(
-              Icons.delete,
+            onPressed: _processAddTask,
+            backgroundColor: controller.isDeleting ? Colors.red : Colors.blue,
+            child: Icon(
+              controller.isDeleting ? Icons.delete : Icons.add,
             ),
           );
         });
       },
-      onAccept: (Task task) {
-        controller.deleteTask(task)
-            ? EasyLoadingManager.showSuccess(status: 'Delete success')
-            : EasyLoadingManager.showError(status: 'Delete unsuccess');
-      },
+      onAccept: (Task task) => _processDeleteTask(task),
     );
   }
 }
