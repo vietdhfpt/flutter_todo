@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'data/services/storage/services.dart';
 import 'modules/home/binding.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Todo List using GetX',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: const HomePage(),
       initialBinding: HomeBinding(),

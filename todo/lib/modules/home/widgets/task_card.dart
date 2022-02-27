@@ -43,6 +43,7 @@ class TaskCard extends StatelessWidget {
           children: [
             _buildStepProgress(color),
             _buildIcon(color),
+            const SizedBox(height: kDefaultPadding),
             _buildTextInfo(),
           ],
         ),
@@ -86,7 +87,7 @@ class TaskCard extends StatelessWidget {
 
   Widget _buildTextInfo() {
     return Padding(
-      padding: EdgeInsets.all(6.0.wp),
+      padding: EdgeInsets.symmetric(horizontal: 5.0.wp),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -96,7 +97,6 @@ class TaskCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),
-          const SizedBox(height: kDefaultSpacing / 2),
           Text(
             '${task.todos?.length ?? 0} Task',
             style: normalStyle.copyWith(
